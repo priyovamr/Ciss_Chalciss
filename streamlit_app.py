@@ -128,8 +128,6 @@ if test == "Prediksi":
         LT = st.number_input('Input Luas Tanah (m2)')
     with col1:
         LB = st.number_input('Input Luas Bangunan (m2)')
-    with col2:
-        KPR_Bulanan = st.number_input('Input harga cicilan KPR bulanan (juta/bulan)')
 
     predict = ''
 
