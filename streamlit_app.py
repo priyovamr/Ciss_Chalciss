@@ -1,6 +1,10 @@
 import pickle
 import streamlit as st
 import pandas as pd
+import zipfile
+from io import BytesIO
+import os
+import tempfile
 
 # Import library untuk visualisasi
 import matplotlib.pyplot as plt 
