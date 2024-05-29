@@ -11,35 +11,49 @@ import matplotlib.pyplot as plt
 
 filename = 'prediksi_harga_rumah_smg.zip'
 
-def extract_zip(zip_file, extract_to):
-    """
-    Extracts a ZIP file to the specified directory.
+# def extract_zip(zip_file, extract_to):
+#     """
+#     Extracts a ZIP file to the specified directory.
     
-    :param zip_file: In-memory file-like object representing the ZIP file.
-    :param extract_to: Directory where the contents should be extracted.
-    """
-    with zipfile.ZipFile(zip_file, 'r') as zip_ref:
-        zip_ref.extractall(extract_to)
-        return zip_ref.namelist()
+#     :param zip_file: In-memory file-like object representing the ZIP file.
+#     :param extract_to: Directory where the contents should be extracted.
+#     """
+#     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
+#         zip_ref.extractall(extract_to)
+#         return zip_ref.namelist()
         
-with tempfile.TemporaryDirectory() as temp_dir:
-    # Extract the uploaded ZIP file
-    extracted_files = extract_zip(filename, temp_dir)
+# with tempfile.TemporaryDirectory() as temp_dir:
+#     # Extract the uploaded ZIP file
+#     extracted_files = extract_zip(filename, temp_dir)
                 
-    # Display the list of extracted files
-    st.write("Extracted Files:")
-    for file_name in extracted_files:
-        st.write(file_name)
-        file_path = os.path.join(temp_dir, file_name)
-        with open(file_path, "rb") as file:
-            btn = st.download_button(
-                label=f"Download {file_name}",
-                data=file,
-                file_name=file_name,
-                mime="application/octet-stream"
-            )
+#     # Display the list of extracted files
+#     st.write("Extracted Files:")
+#     for file_name in extracted_files:
+#         st.write(file_name)
+#         file_path = os.path.join(temp_dir, file_name)
+#         with open(file_path, "rb") as file:
+#             btn = st.download_button(
+#                 label=f"Download {file_name}",
+#                 data=file,
+#                 file_name=file_name,
+#                 mime="application/octet-stream"
+#             )
 
-model = pickle.load(open("prediksi_harga_rumah_smg.sav", 'rb'))
+with zipfile.ZipFile(filename, 'r') as zip_ref:
+    # List all the contents of the zip file
+    file_list = zip_ref.namelist()
+        
+    with tempfile.TemporaryDirectory() as temp_dir:
+        # Extract all files to the temporary directory
+        zip_ref.extractall(temp_dir)
+            
+        # Load pickle files from the extracted contents
+        for file_name in file_list:
+            file_path = os.path.join(temp_dir, file_name)
+            with open(file_path, 'rb') as f:
+                model = pickle.load(f)
+
+# model = pickle.load(open("prediksi_harga_rumah_smg.sav", 'rb'))
 
 # Membuat sidebar
 test = st.sidebar.radio("Menu", ["Beranda", "Data","Labelling", "Prediksi", "Kontak"])
