@@ -5,7 +5,37 @@ import pandas as pd
 # Import library untuk visualisasi
 import matplotlib.pyplot as plt 
 
-model = pickle.load(open('prediksi_harga_rumah_smg.sav', 'rb'))
+filename = 'prediksi_harga_rumah_smg.zip'
+
+def extract_zip(zip_file, extract_to):
+    """
+    Extracts a ZIP file to the specified directory.
+    
+    :param zip_file: In-memory file-like object representing the ZIP file.
+    :param extract_to: Directory where the contents should be extracted.
+    """
+    with zipfile.ZipFile(zip_file, 'r') as zip_ref:
+        zip_ref.extractall(extract_to)
+        return zip_ref.namelist()
+        
+with tempfile.TemporaryDirectory() as temp_dir:
+    # Extract the uploaded ZIP file
+    extracted_files = extract_zip(filename, temp_dir)
+                
+    # Display the list of extracted files
+    st.write("Extracted Files:")
+    for file_name in extracted_files:
+        st.write(file_name)
+        file_path = os.path.join(temp_dir, file_name)
+        with open(file_path, "rb") as file:
+            btn = st.download_button(
+                label=f"Download {file_name}",
+                data=file,
+                file_name=file_name,
+                mime="application/octet-stream"
+            )
+
+model = pickle.load(open(filename, 'rb'))
 
 # Membuat sidebar
 test = st.sidebar.radio("Menu", ["Beranda", "Data","Labelling", "Prediksi", "Kontak"])
