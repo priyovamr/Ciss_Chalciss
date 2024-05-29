@@ -9,7 +9,7 @@ import tempfile
 # Import library untuk visualisasi
 import matplotlib.pyplot as plt 
 
-filename = 'prediksi_harga_rumah_semarang.zip'
+filename = 'prediksi_harga_rumah_smg.zip'
 
 # def extract_zip(zip_file, extract_to):
 #     """
