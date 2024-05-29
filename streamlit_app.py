@@ -39,7 +39,7 @@ with tempfile.TemporaryDirectory() as temp_dir:
                 mime="application/octet-stream"
             )
 
-model = pickle.load(open(filename, 'rb'))
+model = pickle.load(open("prediksi_harga_rumah_smg.sav", 'rb'))
 
 # Membuat sidebar
 test = st.sidebar.radio("Menu", ["Beranda", "Data","Labelling", "Prediksi", "Kontak"])
